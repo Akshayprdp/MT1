@@ -43,6 +43,7 @@
 
 .product-category {
     margin-top: 20px;
+    transition: 1s;
 }
 
 .product-category p {

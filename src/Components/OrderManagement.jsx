@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./OrderManagement.css";
 import {
   FaBox,
   FaMobileAlt,
@@ -8,11 +7,13 @@ import {
   FaHome,
   FaEllipsisH,
 } from "react-icons/fa";
+import "./OrderManagement.css";
 
 const OrderManagement = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [showCategory, setShowCategory] = useState(true); // To toggle the category section visibility
+  const [showCategory, setShowCategory] = useState(true); 
   const [loadType, setLoadType] = useState("Carton box");
+  const [showLoadType, setShowLoadType] = useState(true); 
   const [quantity, setQuantity] = useState(6);
   const [volumetric, setVolumetric] = useState({
     length: 12,
@@ -21,7 +22,6 @@ const OrderManagement = () => {
   });
   const [weight, setWeight] = useState(100);
   const [invoiceNumber, setInvoiceNumber] = useState("ADH52VR");
-
   const [orders, setOrders] = useState([
     {
       loadType: "Carton box",
@@ -56,13 +56,29 @@ const OrderManagement = () => {
     { name: "Others", icon: <FaEllipsisH /> },
   ];
 
+  const loadTypes = [
+    { name: "Carton box", icon: <FaBox /> },
+    { name: "Wooden box", icon: <FaMobileAlt /> },
+    { name: "Plastic", icon: <FaBasketballBall /> },
+    { name: "Other", icon: <FaTshirt /> },
+  ];
+
   const handleCategoryChange = (categoryName) => {
     setSelectedCategory(categoryName);
-    setShowCategory(false); // Hide the category section after selection
+    setShowCategory(false); // Hide category options after selection
   };
 
   const handleCategoryReset = () => {
-    setShowCategory(true); // Show the category section again for re-selection
+    setShowCategory(true); // Show category options for re-selection
+  };
+
+  const handleLoadTypeChange = (loadName) => {
+    setLoadType(loadName);
+    setShowLoadType(false); // Hide load options after selection
+  };
+
+  const handleLoadTypeReset = () => {
+    setShowLoadType(true); // Show load options for re-selection
   };
 
   return (
@@ -74,9 +90,10 @@ const OrderManagement = () => {
             New Order +
           </button>
         </div>
+
         {showCategory ? (
           <div className="product-category">
-            <h5 >Select Product Category</h5>
+            <h5>Select Product Category</h5>
             <div className="category-grid">
               {categories.map((category) => (
                 <div
@@ -115,14 +132,38 @@ const OrderManagement = () => {
           </div>
         )}
 
-        <div className="load-type">
-          <p>Load Type</p>
-          <div className="load-box">
-            <span>{loadType}</span>
-            <span>{quantity} Quantity</span>
-            <button className="change-btn">Change</button>
+        {!showLoadType ? (
+          <div className="load-type">
+            <h5>Load Type</h5>
+            <div className="load-box">
+              <span>{loadType}</span>
+              <span>{quantity} Quantity</span>
+              <button className="change-btn" onClick={handleLoadTypeReset}>
+                Change
+              </button>
+            </div>
           </div>
-        </div>
+        ) : null}
+
+        {showLoadType && (
+          <div className="load-category">
+            <h5>Select Load Type</h5>
+            <div className="category-grid">
+              {loadTypes.map((load) => (
+                <div
+                  key={load.name}
+                  className={`category-box ${
+                    loadType === load.name ? "selected" : ""
+                  }`}
+                  onClick={() => handleLoadTypeChange(load.name)}
+                >
+                  <div className="icon">{load.icon}</div>
+                  <span>{load.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="volumetric-section">
           <div>
@@ -239,16 +280,10 @@ const OrderManagement = () => {
             <p>
               <strong>Load Category</strong>: {loadType}
             </p>
+            <p>
+              <strong>Order Status</strong>: Confirmed
+            </p>
           </div>
-
-          <div className="payment-summary">
-            <h3>Payment Summary</h3>
-            <p>Total Weight: {weight} kg</p>
-            <p>SUB TOTAL: ₹{(weight * 10).toFixed(2)}</p>{" "}
-            {/* Example calculation */}
-          </div>
-
-          <button className="pay-btn">Proceed to Pay</button>
         </div>
       </div>
     </div>
