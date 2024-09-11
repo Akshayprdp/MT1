@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import {  FaCubes, FaThLarge } from 'react-icons/fa';
+import Modal from "./Modal";
 import {
   FaBox,
   FaMobileAlt,
@@ -9,11 +11,13 @@ import {
 } from "react-icons/fa";
 import "./OrderManagement.css";
 
+
+
 const OrderManagement = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [showCategory, setShowCategory] = useState(true); 
+  const [showCategory, setShowCategory] = useState(true);
   const [loadType, setLoadType] = useState("Carton box");
-  const [showLoadType, setShowLoadType] = useState(true); 
+  const [showLoadType, setShowLoadType] = useState(true);
   const [quantity, setQuantity] = useState(6);
   const [volumetric, setVolumetric] = useState({
     length: 12,
@@ -58,27 +62,27 @@ const OrderManagement = () => {
 
   const loadTypes = [
     { name: "Carton box", icon: <FaBox /> },
-    { name: "Wooden box", icon: <FaMobileAlt /> },
-    { name: "Plastic", icon: <FaBasketballBall /> },
-    { name: "Other", icon: <FaTshirt /> },
+    { name: "Wooden box", icon: <FaCubes /> }, 
+    { name: "Plastic", icon: <FaTshirt /> }, 
+    { name: "Other", icon: <FaThLarge /> },
   ];
 
   const handleCategoryChange = (categoryName) => {
     setSelectedCategory(categoryName);
-    setShowCategory(false); // Hide category options after selection
+    setShowCategory(false);
   };
 
   const handleCategoryReset = () => {
-    setShowCategory(true); // Show category options for re-selection
+    setShowCategory(true);
   };
 
   const handleLoadTypeChange = (loadName) => {
     setLoadType(loadName);
-    setShowLoadType(false); // Hide load options after selection
+    setShowLoadType(false);
   };
 
   const handleLoadTypeReset = () => {
-    setShowLoadType(true); // Show load options for re-selection
+    setShowLoadType(true);
   };
 
   return (
@@ -132,20 +136,7 @@ const OrderManagement = () => {
           </div>
         )}
 
-        {!showLoadType ? (
-          <div className="load-type">
-            <h5>Load Type</h5>
-            <div className="load-box">
-              <span>{loadType}</span>
-              <span>{quantity} Quantity</span>
-              <button className="change-btn" onClick={handleLoadTypeReset}>
-                Change
-              </button>
-            </div>
-          </div>
-        ) : null}
-
-        {showLoadType && (
+        {showLoadType ? (
           <div className="load-category">
             <h5>Select Load Type</h5>
             <div className="category-grid">
@@ -163,128 +154,189 @@ const OrderManagement = () => {
               ))}
             </div>
           </div>
+        ) : (
+          <div className="selected-load-type">
+            <h5>Load Type</h5>
+            <div className="load-box">
+              <span>{loadType}</span>
+              <span>{quantity} Quantity</span>
+              <button className="change-btn" onClick={handleLoadTypeReset}>
+                Change
+              </button>
+            </div>
+          </div>
         )}
+<br />
+<div className="volumetric-section">       
+  <label>Volumetric</label>
+  <input
+    type="number"
+    value={volumetric.length}
+    onChange={(e) =>
+      setVolumetric({ ...volumetric, length: e.target.value })
+    }
+    placeholder="L"
+    className="volumetric-input"
+  />
+  <input
+    type="number"
+    value={volumetric.breadth}
+    onChange={(e) =>
+      setVolumetric({ ...volumetric, breadth: e.target.value })
+    }
+    placeholder="B"
+    className="volumetric-input"
+  />
+  <input
+    type="number"
+    value={volumetric.height}
+    onChange={(e) =>
+      setVolumetric({ ...volumetric, height: e.target.value })
+    }
+    placeholder="H"
+    className="volumetric-input"
+  />
 
-        <div className="volumetric-section">
-          <div>
-            <label>Volumetric</label>
-            <input
-              type="number"
-              value={volumetric.length}
-              onChange={(e) =>
-                setVolumetric({ ...volumetric, length: e.target.value })
-              }
-              placeholder="L"
-            />
-            <input
-              type="number"
-              value={volumetric.breadth}
-              onChange={(e) =>
-                setVolumetric({ ...volumetric, breadth: e.target.value })
-              }
-              placeholder="B"
-            />
-            <input
-              type="number"
-              value={volumetric.height}
-              onChange={(e) =>
-                setVolumetric({ ...volumetric, height: e.target.value })
-              }
-              placeholder="H"
-            />
-          </div>
-          <div>
-            <label>Actual Weight</label>
-            <input
-              type="number"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-              placeholder="Weight"
-            />
-            <span>kg</span>
-          </div>
-          <div>
-            <label>Invoice No</label>
-            <input
-              type="text"
-              value={invoiceNumber}
-              onChange={(e) => setInvoiceNumber(e.target.value)}
-            />
-          </div>
-          <button className="add-order-btn" onClick={addOrder}>
-            Add Order +
-          </button>
-        </div>
+  <div className="weight-section">
+    <label>Actual Weight</label>
+    <input
+      type="number"
+      value={weight}
+      onChange={(e) => setWeight(e.target.value)}
+      placeholder="Weight"
+      className="weight-input"
+      style={{width:'70px'}}
+    />
+    <span>kg</span>
+  </div>
 
-        <div className="order-overview">
-          <h3>Order Overview</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Invoice No</th>
-                <th>Load Type</th>
-                <th>Load Quantity</th>
-                <th>Actual Weight</th>
-                <th>Volumetric (LxBxH)</th>
-                <th>Product Category</th>
-                <th>HAZMAT Class</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{order.invoiceNumber}</td>
-                  <td>{order.loadType}</td>
-                  <td>{order.quantity}</td>
-                  <td>{order.weight} kg</td>
-                  <td>{`${order.volumetric.length}x${order.volumetric.breadth}x${order.volumetric.height}`}</td>
-                  <td>{order.productCategory}</td>
-                  <td>{order.hazmat}</td>
-                  <td>
-                    <button>Edit</button>
-                    <button>Delete</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+  <div className="invoice-section">
+    <label>Invoice No</label>
+    <input
+      type="text"
+      value={invoiceNumber}
+      onChange={(e) => setInvoiceNumber(e.target.value)}
+      className="invoice-input"
+      style={{width:'100px'}}
+    />
+  </div>
+
+  <button className="add-order-btn" onClick={addOrder}>
+    Add Order +
+  </button>
+</div>
+<br />
+
+
+<div className="order-overview">
+  <h3>Order Overview</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Invoice No</th>
+        <th>Load Type</th>
+        <th>Load Quantity</th>
+        <th>Actual Weight</th>
+        <th>Volumetric (LxBxH)</th>
+        <th>Product Category</th>
+        <th>HAZMAT Class</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {orders.map((order, index) => (
+        <tr key={index}>
+          <td>{index + 1}</td>
+          <td>{order.invoiceNumber}</td>
+          <td>{order.loadType}</td>
+          <td>{order.quantity}</td>
+          <td>{order.weight} kg</td>
+          <td>{`${order.volumetric.length}x${order.volumetric.breadth}x${order.volumetric.height}`}</td>
+          <td>{order.productCategory}</td>
+          <td>{order.hazmat}</td>
+          <td>
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+       
       </div>
 
       <div className="right-panel">
-        <div className="order-summary">
-          <h3>Order Summary</h3>
-          <div className="summary-section">
-            <p>
-              <strong>Pickup Address</strong>: Burger St, Fort Nagar, Kochi,
-              Kerala
-            </p>
-            <p>
-              <strong>Pickup Contact</strong>: Jack Goe | +91 9876543210
-            </p>
-            <p>
-              <strong>Pickup Time</strong>: 24/07/2024 | 16:00 - 20:00
-            </p>
-            <p>
-              <strong>Delivery Address</strong>: Jew Town Rd, Ernakulam, Kerala
-            </p>
-            <p>
-              <strong>Delivery Contact</strong>: Napier | +91 9876543210
-            </p>
-            <p>
-              <strong>Product Category</strong>: {selectedCategory}
-            </p>
-            <p>
-              <strong>Load Category</strong>: {loadType}
-            </p>
-            <p>
-              <strong>Order Status</strong>: Confirmed
-            </p>
-          </div>
-        </div>
+      <div className="order-summary">
+  <h3>Order Summary</h3>
+  <div className="summary-section">
+    <div className="summary-item">
+      <h4>Pickup Address <span className="edit-option">(Edit)</span></h4>
+      <p>Burger St, Fort Nagar, Kochi, Kerala</p>
+    </div>
+
+    <div className="summary-item">
+      <h4>Pickup Contact Details</h4>
+      <p><strong>Name</strong>: Jack Goe</p>
+      <p><strong>Phone Number</strong>: +91 9876543210</p>
+      <p><strong>Email</strong>: jack.goe@example.com</p>
+    </div>
+
+    <div className="summary-item">
+      <h4>Pickup Time</h4>
+      <p>24/07/2024 | 16:00 - 20:00</p>
+    </div>
+
+    <div className="summary-item">
+      <h4>Delivery Address <span className="edit-option">(Edit)</span></h4>
+      <p>Jew Town Rd, Ernakulam, Kerala</p>
+    </div>
+
+    <div className="summary-item">
+      <h4>Delivery Contact Details</h4>
+      <p><strong>Name</strong>: Napier</p>
+      <p><strong>Phone Number</strong>: +91 9876543210</p>
+      <p><strong>Email</strong>: napier@example.com</p>
+    </div>
+
+    <div className="summary-item">
+      <h4>Product Category</h4>
+      <p>{selectedCategory}</p>
+    </div>
+
+    <div className="summary-item">
+      <h4>Load Type</h4>
+      <p>{loadType}</p>
+    </div>
+    
+    <div className="summary-item">
+      <h4>Quantity</h4>
+      <p>{quantity}</p>
+    </div>
+
+    <div className="summary-item">
+      <h4>Weight</h4>
+      <p>{weight} kg</p>
+    </div>
+
+    <div className="summary-item">
+      <h4>Volumetric</h4>
+      <p>{`${volumetric.length}x${volumetric.breadth}x${volumetric.height}`}</p>
+    </div>
+
+    <div className="summary-item">
+      <h4>Invoice No</h4>
+      <p>{invoiceNumber}</p>
+    </div>
+
+    <div className="summary-item">
+      <h4>HAZMAT</h4>
+      <p>No</p>
+    </div>
+  </div>
+</div>
       </div>
     </div>
   );

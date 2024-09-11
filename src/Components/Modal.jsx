@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React from 'react';
+import './Modal.css'; // You can customize the styles as needed
 
-const Modal = ({ show, handleClose, children }) => {
+const Modal = ({ show, onClose, title, children }) => {
+  if (!show) return null;
+
   return (
-    <div className={`modal ${show ? "show" : ""}`}>
+    <div className="modal-overlay">
       <div className="modal-content">
-        <span className="close" onClick={handleClose}>&times;</span>
-        {children}
+        <div className="modal-header">
+          <h4>{title}</h4>
+          <button className="close-btn" onClick={onClose}>×</button>
+        </div>
+        <div className="modal-body">
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -138,3 +138,180 @@
     border-radius: 4px;
     cursor: pointer;
 }
+
+.volumetric-section input {
+    width: 50px; /* Adjust the width as needed, 5px might be too small */
+    margin-right: 5px; /* Add some space between the inputs */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+.order-management {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.left-panel {
+  width: 70%;
+}
+
+.right-panel {
+  width: 30%;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.new-order-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.new-order-btn:hover {
+  background-color: #0056b3;
+}
+
+.product-category,
+.load-category {
+  margin-bottom: 20px;
+}
+
+.category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.category-box.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.selected-category-section {
+  margin-bottom: 20px;
+}
+
+.selected-category-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.change-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.change-btn:hover {
+  background-color: #0056b3;
+}
+
+.volumetric-section {
+  margin-bottom: 20px;
+}
+
+.volumetric-input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.volumetric-section,
+.weight-invoice-group {
+  display: flex;
+  align-items: center;
+}
+
+.volumetric-input {
+  width: 60px;
+}
+
+.weight-section,
+.invoice-section {
+  margin-right: 20px;
+}
+
+.weight-input {
+  width: 100px;
+}
+
+.invoice-input {
+  width: 150px;
+}
+
+.add-order-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-order-btn:hover {
+  background-color: #0056b3;
+}
+
+.order-overview {
+  margin-top: 20px;
+}
+
+.order-summary {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  .summary-section {
+    margin-top: 10px;
+  }
+  
+  .summary-item {
+    margin-bottom: 15px;
+  }
+  
+  .summary-item h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .summary-item p {
+    margin: 0;
+  }
+  
+  .edit-option {
+    color: #007bff;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
