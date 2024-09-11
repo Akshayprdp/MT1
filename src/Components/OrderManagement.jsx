@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {  FaCubes, FaThLarge } from 'react-icons/fa';
-import Modal from "./Modal";
 import {
   FaBox,
   FaMobileAlt,
@@ -18,7 +17,7 @@ const OrderManagement = () => {
   const [showCategory, setShowCategory] = useState(true);
   const [loadType, setLoadType] = useState("Carton box");
   const [showLoadType, setShowLoadType] = useState(true);
-  const [quantity, setQuantity] = useState(6);
+  const [quantity, ] = useState(6);
   const [volumetric, setVolumetric] = useState({
     length: 12,
     breadth: 12,
